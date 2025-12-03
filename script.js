@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Select DOM elements
     const addButton = document.getElementById('add-task-btn');
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
@@ -6,12 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load tasks from localStorage
     function loadTasks() {
         const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-        storedTasks.forEach(function(taskText) {
-            createTaskElement(taskText);
+        storedTasks.forEach(function(task) {
+            createTaskElement(task);
         });
     }
 
-    // Create a task element
+    // Create task element
     function createTaskElement(taskText) {
         const li = document.createElement('li');
         li.textContent = taskText;
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         taskList.appendChild(li);
     }
 
-    // Add task function (named)
+    // Named addTask function
     function addTask() {
         const taskText = taskInput.value.trim();
         if (taskText === '') {
@@ -49,13 +50,13 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-    // Event listeners
+    // Attach event listeners
     addButton.addEventListener('click', addTask);
     taskInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') addTask();
     });
 
-    // Load existing tasks
+    // Load tasks on page load
     loadTasks();
 });
 
