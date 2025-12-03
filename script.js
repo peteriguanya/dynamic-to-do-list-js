@@ -10,19 +10,17 @@ document.addEventListener('DOMContentLoaded', () => {
         storedTasks.forEach(taskText => addTask(taskText, false));
     };
 
-    // Function to add a task
-    const addTask = (taskTextParam = null, save = true) => {
-        const taskText = taskTextParam !== null ? taskTextParam : taskInput.value.trim();
+    // Add task function
+    const addTask = (taskTextParam, save = true) => {
+        const taskText = taskTextParam || taskInput.value.trim();
         if (taskText === '') {
-            alert('Please enter a task');
+            alert('Please enter a task!');
             return;
         }
 
-        // Create list item
         const li = document.createElement('li');
         li.textContent = taskText;
 
-        // Create remove button
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'Remove';
         removeBtn.className = 'remove-btn';
@@ -33,23 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         li.appendChild(removeBtn);
         taskList.appendChild(li);
+        taskInput.value = '';
 
-        // Clear input field if added from user input
-        if (taskTextParam === null) {
-            taskInput.value = '';
-        }
-
-        // Save to localStorage
         if (save) {
             updateLocalStorage();
         }
     };
 
-    // Function to update localStorage
+    // Update localStorage with current tasks
     const updateLocalStorage = () => {
         const tasks = [];
         taskList.querySelectorAll('li').forEach(li => {
-            tasks.push(li.firstChild.textContent); // firstChild is the task text
+            tasks.push(li.firstChild.textContent);
         });
         localStorage.setItem('tasks', JSON.stringify(tasks));
     };
@@ -62,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Load tasks on page load
+    // Initial load
     loadTasks();
 });
-
 
